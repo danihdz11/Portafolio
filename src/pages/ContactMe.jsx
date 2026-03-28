@@ -1,73 +1,53 @@
-import { useState } from "react";
 import { Link } from "react-router";
+import Recat, { useState } from "react";
 
 
-const ContactMe = () => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
 
-  const handleOnchange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    console.log(form);
-  };
+export default function ContactMe() {
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    })
 
-  const handleSendEmail = async(e) => {
-    e.preventDefault();
-    console.log("dasa")
-    const data = await fetch('/api/server', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            name: form.name,
-            email: form.email,
-            message: form.message,
-        }),
-    });
-    const res = await data.json();
-    console.log(res);
-  };
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }))
+    }
 
-  return (
-    <div>
-      Contactme
-      <div>
-        <div style={{ display: 'flex', gap: '20px' }}>
-          <input
-            name="name"
-            type="text"
-            value={form.name}
-            onChange={handleOnchange}
-          />
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleOnchange}
-          />
+    const handleSendEmail = async (e) => {
+        e.preventDefault();
+        const data = await fetch('api/server', {
+            method: "POST",
+            headers: {},
+            body: JSON.stringify({
+                name: form.name,
+                email: form.email,
+                message: form.message,
+            }),
+        });
+        const res = await data.json();
+        console.log(res);
+    }
+
+
+    return (
+        <div>
+            <h1>Contact Me</h1>
+            <div>
+                <div style={{ display: 'flex', gap: '20px' }}>
+                    <input name="name" type="text" value={form.name} onChange={handleOnChange} />
+                    <input name="email" type="email" value={form.email} onChange={handleOnChange} />
+                </div>
+                <div style={{ paddingTop: '20px' }}>
+                    <textarea name="message" rows="10" cols="50" value={form.message} onChange={handleOnChange}>Write something here</textarea>
+                </div>
+                <button onclick={handleSendEmail} style={{ width: '140px', height: '40px' }}>Contact Me</button>
+            </div>
         </div>
-        <div style={{ paddingTop: '20px' }}>
-          <textarea
-            name="message"
-            type="message"
-            rows="10"
-            cols="50"
-            value={form.message}
-            onChange={handleOnchange}
-          />
-        </div>
-        <button style={{ width: '140px', height: '40px' }}>Contact Me</button>
-      </div>
-      <button onClick={handleSendEmail}>Go Back</button>
-    </div>
-  );
-};
-
-export default ContactMe;
+    )
+}
