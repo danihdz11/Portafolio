@@ -18,6 +18,7 @@ const handler = async (req, res) => {
       <strong>${message}</strong>`,
     });
 
+
     return res.status(200).json({ data });
   } catch (error) {
     return res.status(502).json({ error });

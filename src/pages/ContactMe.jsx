@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 
-const Contactme = () => {
+const ContactMe = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -21,6 +21,7 @@ const Contactme = () => {
 
   const handleSendEmail = async(e) => {
     e.preventDefault();
+    console.log("dasa")
     const data = await fetch('/api/server', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
