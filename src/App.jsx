@@ -3,7 +3,9 @@ import { Routes, Route, Outlet } from 'react-router-dom'
 import NavBar from './components/Navbar'
 import Hero from './components/Hero'
 import AboutMe from './pages/AboutMe'
+import Skills from './pages/Skills'
 import Projects from './pages/Projects'
+import Experience from './pages/Experience'
 import ContactMe from './pages/ContactMe'
 
 function Layout() {
@@ -20,7 +22,9 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Hero />} />
         <Route path="/aboutme" element={<AboutMe />} />
+        <Route path="/skills" element={<Skills />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/experience" element={<Experience />} />
         <Route path="/contactme" element={<ContactMe />} />
       </Route>
     </Routes>
