@@ -1,10 +1,8 @@
 .site-header {
   width: 100%;
   box-sizing: border-box;
-  padding: 1.25rem 2rem 1.35rem;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  background-color: #0f172a;
+  padding: 1rem 1.25rem;
+  background: transparent;
 }
 
 .container-navbar {
@@ -15,6 +13,12 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0.85rem 1.75rem;
+  background-color: #0f172a;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
 }
 
 .navbar-brand-wrap {
@@ -137,6 +141,7 @@
     grid-template-rows: auto auto auto;
     justify-items: center;
     row-gap: 1rem;
+    border-radius: 1.5rem;
   }
 
   .navbar-brand-wrap {
