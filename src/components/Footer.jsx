@@ -20,11 +20,11 @@ const socialIcons = [
 const Footer = () => {
   const year = new Date().getFullYear()
   const { pathname } = useLocation()
-  const isProjectsPage = pathname === "/projects"
+  const isBlackFooter = pathname === "/projects" || pathname === "/aboutme"
 
   return (
     <footer
-      className={`site-footer${isProjectsPage ? " site-footer--projects" : ""}`}
+      className={`site-footer${isBlackFooter ? " site-footer--black" : ""}`}
     >
       <div className="footer-inner">
         <div className="footer-brand-wrap">
