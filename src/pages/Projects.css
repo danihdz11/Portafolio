@@ -266,16 +266,7 @@ body.projects-page-body {
   font-family: "Inter", system-ui, sans-serif;
   line-height: 1.3;
   letter-spacing: -0.02em;
-}
-
-.projects-card-title-link {
   color: #fafafa;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.projects-card-title-link:hover {
-  color: #e4e4e7;
 }
 
 .projects-card-subtitle {
@@ -285,28 +276,6 @@ body.projects-page-body {
   font-family: "Inter", system-ui, sans-serif;
   line-height: 1.45;
   color: #71717a;
-}
-
-.projects-card-links {
-  margin: 0.65rem 0 0;
-  font-size: 0.8125rem;
-  font-family: "Inter", system-ui, sans-serif;
-}
-
-.projects-card-links-sep {
-  margin: 0 0.35rem;
-  color: #3f3f46;
-}
-
-.projects-card-inline-link {
-  color: #52525b;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.projects-card-inline-link:hover {
-  color: #a1a1aa;
 }
 
 .projects-empty {
@@ -482,6 +451,45 @@ body.projects-page-body {
   color: #a1a1aa;
 }
 
+.projects-modal-description-group .projects-modal-description:last-of-type {
+  margin-bottom: 0;
+}
+
+.projects-modal-description-list {
+  margin: 0 0 1.35rem;
+  padding-left: 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #a1a1aa;
+}
+
+.projects-modal-description-list li {
+  margin-bottom: 0.35rem;
+}
+
+.projects-modal-description-list li:last-child {
+  margin-bottom: 0;
+}
+
+.projects-modal-highlight {
+  margin: 1.5rem 0 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.55;
+  color: #e4e4e7;
+}
+
+.projects-modal-certificate {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 1.35rem 0 2.25rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
 .projects-modal-section-label {
   margin: 0 0 0.6rem;
   font-size: 0.8125rem;
@@ -514,6 +522,7 @@ body.projects-page-body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   width: 100%;
   box-sizing: border-box;
   padding: 0.75rem 1.25rem;
@@ -527,6 +536,13 @@ body.projects-page-body {
   transition:
     background 0.2s ease,
     transform 0.15s ease;
+}
+
+.projects-modal-github-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
 }
 
 .projects-modal-github:hover {
