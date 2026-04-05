@@ -88,4 +88,4 @@ const NavBar = ({ children }) => {
   )
 }
 
-export default NavBar
+export default NavBar;

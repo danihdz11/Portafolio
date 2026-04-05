@@ -2,6 +2,7 @@ import './App.css'
 import { Routes, Route, Outlet } from 'react-router-dom'
 import NavBar from './components/Navbar'
 import Hero from './components/Hero'
+import Footer from './components/Footer'
 import AboutMe from './pages/AboutMe'
 import Skills from './pages/Skills'
 import Projects from './pages/Projects'
@@ -12,6 +13,7 @@ function Layout() {
   return (
     <NavBar>
       <Outlet />
+      <Footer />
     </NavBar>
   )
 }
