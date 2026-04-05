@@ -41,7 +41,7 @@ export default function ContactMe() {
                     <div className="contact-profile-card">
                         <div className="contact-avatar-wrap">
                             <img
-                                src="/images/dev_logo.png"
+                                src="/images/me.jpeg"
                                 alt=""
                                 className="contact-avatar"
                                 width={120}
@@ -54,10 +54,7 @@ export default function ContactMe() {
                         <ul className="contact-info-list">
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                        <path d="m22 6-10 7L2 6" />
-                                    </svg>
+                                    <img src="/images/mail.png" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Email</span>
@@ -66,10 +63,7 @@ export default function ContactMe() {
                             </li>
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        <rect x="5" y="2" width="14" height="20" rx="2" />
-                                        <path d="M12 18h.01" />
-                                    </svg>
+                                    <img src="/images/telephone.png" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Phone</span>
@@ -78,10 +72,7 @@ export default function ContactMe() {
                             </li>
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" />
-                                        <path d="M16 2v4M8 2v4M3 10h18" />
-                                    </svg>
+                                    <img src="/images/calendar.png" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Birthday</span>
@@ -90,10 +81,7 @@ export default function ContactMe() {
                             </li>
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        <path d="M12 21s-8-4.5-8-11a8 8 0 0 1 16 0c0 6.5-8 11-8 11z" />
-                                        <circle cx="12" cy="10" r="3" />
-                                    </svg>
+                                    <img src="/images/location.png" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Location</span>
