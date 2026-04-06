@@ -3,14 +3,8 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import "./AboutMe.css";
 
-/** Edit this line to your own motto — shown in the quote box under “Who I am”. */
 const PERSONAL_MOTTO = "Going on when you feel like you can't anymore is what makes you different from everyone else. - Rocky Balboa";
 
-/**
- * Certificates: place images in public/images/certifications/
- * issuer: organization or platform that issued it
- * year: when you earned it (string or number, shown as-is)
- */
 const CERTIFICATIONS = [
   {
     id: "cert-1",
@@ -71,7 +65,7 @@ const TECH_STACK = [
   { name: "Sendpulse", file: "sendpulse_logo.webp" },
 ];
 
-/** Shortest distance between item indices on a circular list (for scale styling). */
+
 function ringDistance(itemA, itemB, n) {
   if (n <= 1) return 0;
   const d = Math.abs(itemA - itemB);
@@ -116,6 +110,8 @@ const aboutCertItem = {
 
 const SPRING = { type: "spring", stiffness: 280, damping: 32, mass: 0.62 };
 const INSTANT = { duration: 0 };
+
+const CERT_CARD_HOVER_SPRING = { type: "spring", stiffness: 420, damping: 28 };
 
 function TechCarousel() {
   const n = TECH_STACK.length;
@@ -447,7 +443,11 @@ const AboutMe = () => {
             >
               {CERTIFICATIONS.map((cert) => (
                 <motion.li key={cert.id} variants={reduceMotion ? undefined : aboutCertItem}>
-                  <article className="about-cert-card">
+                  <motion.article
+                    className="about-cert-card"
+                    whileHover={reduceMotion ? undefined : { scale: 1.11 }}
+                    transition={CERT_CARD_HOVER_SPRING}
+                  >
                     <div className="about-cert-media">
                       {cert.imageSrc ? (
                         <img
@@ -483,7 +483,7 @@ const AboutMe = () => {
                         See certificate
                       </a>
                     ) : null}
-                  </article>
+                  </motion.article>
                 </motion.li>
               ))}
             </motion.ul>

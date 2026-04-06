@@ -21,10 +21,7 @@ const maskClip = {
   },
 };
 
-/**
- * Clip-path + whileInView on the same node breaks intersection (0% “visible” → never triggers).
- * useInView on an unclipped wrapper + clip only on the inner layer fixes it.
- */
+
 function ProjectCardMedia({ project, reduceMotion, onViewMore }) {
   const wrapRef = useRef(null);
   const isInView = useInView(wrapRef, { once: true, amount: 0.22 });
@@ -383,7 +380,7 @@ function ProjectModalDescription({ project }) {
 export default function Projects() {
   const [filter, setFilter] = useState("all");
   const [modalProject, setModalProject] = useState(null);
-  /** Evita dos nodos con el mismo layoutId mientras el modal hace exit (vuelta a la tarjeta). */
+
   const [modalExitId, setModalExitId] = useState(null);
   const reduceMotion = useReducedMotion();
   const filtersWrapRef = useRef(null);
