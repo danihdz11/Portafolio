@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import "./AboutMe.css";
 
 /** Edit this line to your own motto — shown in the quote box under “Who I am”. */
@@ -42,7 +42,7 @@ const CERTIFICATIONS = [
     issuer: "Instituto Tecnológico y de Estudios Superiores de Monterrey",
     year: "2024",
     imageSrc: "/images/certifications/embassador_certification.webp",
-    href: "https://www.example.com/verify/2",
+    href: "https://github.com/danihdz11/Portafolio/blob/main/public/images/certifications/embassador_certification.webp",
   },
   {
     id: "cert-5",
@@ -50,7 +50,7 @@ const CERTIFICATIONS = [
     issuer: "Instituto Tecnológico y de Estudios Superiores de Monterrey",
     year: "2025",
     imageSrc: "/images/certificate.png",
-    href: "https://www.example.com/verify/2",
+    href: "https://github.com/danihdz11/Portafolio/blob/main/public/docs/Certificate_Expo_TEC.pdf",
   },
 ];
 
@@ -79,6 +79,40 @@ function ringDistance(itemA, itemB, n) {
 }
 
 const AUTOPLAY_DELAY_MS = 3000;
+
+const EASE_OUT = [0.22, 1, 0.36, 1];
+
+const aboutFadeUp = {
+  hidden: { opacity: 0, y: 26 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.52, ease: EASE_OUT },
+  },
+};
+
+const aboutStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.06 },
+  },
+};
+
+const aboutCertStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.08 },
+  },
+};
+
+const aboutCertItem = {
+  hidden: { opacity: 0, y: 22 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: EASE_OUT },
+  },
+};
 
 const SPRING = { type: "spring", stiffness: 280, damping: 32, mass: 0.62 };
 const INSTANT = { duration: 0 };
@@ -285,22 +319,42 @@ function TechCarousel() {
 }
 
 const AboutMe = () => {
+  const reduceMotion = useReducedMotion();
+
   useEffect(() => {
     document.body.classList.add("about-page-body");
     return () => document.body.classList.remove("about-page-body");
   }, []);
 
+  const inViewProps = reduceMotion
+    ? {}
+    : {
+        initial: "hidden",
+        whileInView: "visible",
+        viewport: { once: true, amount: 0.22 },
+      };
+
   return (
     <div className="about-page">
-      <header className="about-header">
+      <motion.header
+        className="about-header"
+        initial={reduceMotion ? false : { opacity: 0, y: -18 }}
+        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: EASE_OUT }}
+      >
         <h1 className="about-hero-title">
           <span className="about-hero-title-muted">THIS IS </span>
           <span className="about-hero-title-accent">ME</span>
         </h1>
-      </header>
+      </motion.header>
 
-      <section className="about-intro" aria-labelledby="about-who-heading">
-        <div className="about-intro-media">
+      <motion.section
+        className="about-intro"
+        aria-labelledby="about-who-heading"
+        variants={reduceMotion ? undefined : aboutStagger}
+        {...inViewProps}
+      >
+        <motion.div className="about-intro-media" variants={reduceMotion ? undefined : aboutFadeUp}>
           <div className="about-photo-wrap">
             <img
               src="/images/me.jpeg"
@@ -311,8 +365,8 @@ const AboutMe = () => {
               decoding="async"
             />
           </div>
-        </div>
-        <div className="about-intro-copy">
+        </motion.div>
+        <motion.div className="about-intro-copy" variants={reduceMotion ? undefined : aboutFadeUp}>
           <h2 id="about-who-heading" className="about-section-title">
             Who I am
           </h2>
@@ -340,35 +394,59 @@ const AboutMe = () => {
             <span className="about-quote-accent" aria-hidden="true" />
             <p className="about-quote-text">&ldquo;{PERSONAL_MOTTO}&rdquo;</p>
           </blockquote>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       <div className="about-tech-bleed">
-        <section className="about-tech" aria-labelledby="about-tech-heading">
-          <h2 id="about-tech-heading" className="about-tech-heading">
+        <motion.section
+          className="about-tech"
+          aria-labelledby="about-tech-heading"
+          variants={reduceMotion ? undefined : aboutStagger}
+          {...inViewProps}
+        >
+          <motion.h2
+            id="about-tech-heading"
+            className="about-tech-heading"
+            variants={reduceMotion ? undefined : aboutFadeUp}
+          >
             <span className="about-tech-heading-badge">Stack &amp; tools</span>
             <span className="about-tech-heading-title">
               <span className="about-tech-heading-muted">Technologies I </span>
               <span className="about-tech-heading-accent">use</span>
             </span>
-          </h2>
-          <TechCarousel />
-        </section>
+          </motion.h2>
+          <motion.div variants={reduceMotion ? undefined : aboutFadeUp}>
+            <TechCarousel />
+          </motion.div>
+        </motion.section>
       </div>
 
       <div className="about-mid-bleed">
         <div className="about-mid-inner">
           <section className="about-certs" aria-labelledby="about-certs-heading">
-            <h2 id="about-certs-heading" className="about-certs-heading">
+            <motion.h2
+              id="about-certs-heading"
+              className="about-certs-heading"
+              initial={reduceMotion ? false : "hidden"}
+              whileInView={reduceMotion ? undefined : "visible"}
+              viewport={{ once: true, amount: 0.25 }}
+              variants={reduceMotion ? undefined : aboutFadeUp}
+            >
               <span className="about-certs-badge">Credentials</span>
               <span className="about-certs-title-line">
                 <span className="about-tech-heading-accent about-certs-title-accent">Certifications</span>
                 <span className="about-tech-heading-muted"> &amp; courses</span>
               </span>
-            </h2>
-            <ul className="about-cert-grid">
+            </motion.h2>
+            <motion.ul
+              className="about-cert-grid"
+              variants={reduceMotion ? undefined : aboutCertStagger}
+              initial={reduceMotion ? false : "hidden"}
+              whileInView={reduceMotion ? undefined : "visible"}
+              viewport={{ once: true, amount: 0.12 }}
+            >
               {CERTIFICATIONS.map((cert) => (
-                <li key={cert.id}>
+                <motion.li key={cert.id} variants={reduceMotion ? undefined : aboutCertItem}>
                   <article className="about-cert-card">
                     <div className="about-cert-media">
                       {cert.imageSrc ? (
@@ -406,27 +484,33 @@ const AboutMe = () => {
                       </a>
                     ) : null}
                   </article>
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </section>
         </div>
       </div>
 
-      <footer className="about-cta">
-        <h2 className="about-cta-heading">What&apos;s next?</h2>
-        <p className="about-cta-lead">
+      <motion.footer
+        className="about-cta"
+        variants={reduceMotion ? undefined : aboutStagger}
+        {...inViewProps}
+      >
+        <motion.h2 className="about-cta-heading" variants={reduceMotion ? undefined : aboutFadeUp}>
+          What&apos;s next?
+        </motion.h2>
+        <motion.p className="about-cta-lead" variants={reduceMotion ? undefined : aboutFadeUp}>
           See what I&apos;ve built or get in touch—I&apos;d love to hear from you.
-        </p>
-        <div className="about-cta-actions">
+        </motion.p>
+        <motion.div className="about-cta-actions" variants={reduceMotion ? undefined : aboutFadeUp}>
           <Link className="about-cta-btn about-cta-btn--primary" to="/contactme">
             Contact Me
           </Link>
           <Link className="about-cta-btn about-cta-btn--secondary" to="/projects">
             Projects
           </Link>
-        </div>
-      </footer>
+        </motion.div>
+      </motion.footer>
     </div>
   );
 };

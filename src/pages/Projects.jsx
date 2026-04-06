@@ -1,7 +1,75 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import "./Projects.css";
+
+const EASE_MASK = [0.22, 1, 0.36, 1];
+
+const maskClip = {
+  hidden: { clipPath: "inset(0 100% 0 0)", WebkitClipPath: "inset(0 100% 0 0)" },
+  visible: {
+    clipPath: "inset(0 0% 0 0)",
+    WebkitClipPath: "inset(0 0% 0 0)",
+    transition: { duration: 0.78, ease: EASE_MASK },
+  },
+};
+
+/**
+ * Clip-path + whileInView on the same node breaks intersection (0% “visible” → never triggers).
+ * useInView on an unclipped wrapper + clip only on the inner layer fixes it.
+ */
+function ProjectCardMedia({ project, reduceMotion, onViewMore }) {
+  const wrapRef = useRef(null);
+  const isInView = useInView(wrapRef, { once: true, amount: 0.22 });
+
+  const bgStyle =
+    project.imageSrc ? undefined : { background: project.imageGradient ?? "#1a1a1c" };
+
+  return (
+    <div ref={wrapRef} className="projects-card-media" style={bgStyle}>
+      <motion.div
+        className="projects-card-media-reveal"
+        variants={reduceMotion ? undefined : maskClip}
+        initial={reduceMotion ? false : "hidden"}
+        animate={reduceMotion ? false : isInView ? "visible" : "hidden"}
+      >
+        {project.imageSrc ? (
+          <img
+            src={project.imageSrc}
+            alt=""
+            className="projects-card-img"
+            width={640}
+            height={480}
+            decoding="async"
+          />
+        ) : (
+          <span className="projects-card-media-placeholder" aria-hidden>
+            {project.title}
+          </span>
+        )}
+        <div className="projects-card-overlay">
+          <button
+            type="button"
+            className="projects-card-view-more"
+            aria-label={`View more: ${project.title}`}
+            onClick={onViewMore}
+          >
+            <img
+              src="/images/view.png"
+              alt=""
+              className="projects-card-view-icon"
+              width={20}
+              height={20}
+              decoding="async"
+            />
+            View more
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -309,6 +377,11 @@ function ProjectModalDescription({ project }) {
 export default function Projects() {
   const [filter, setFilter] = useState("all");
   const [modalProject, setModalProject] = useState(null);
+  const reduceMotion = useReducedMotion();
+  const filtersWrapRef = useRef(null);
+  const footerWrapRef = useRef(null);
+  const filtersInView = useInView(filtersWrapRef, { once: true, amount: 0.12 });
+  const footerInView = useInView(footerWrapRef, { once: true, amount: 0.2 });
 
   useEffect(() => {
     document.body.classList.add("projects-page-body");
@@ -337,7 +410,12 @@ export default function Projects() {
   return (
     <div className="projects-page">
       <header className="projects-header">
-        <div className="projects-header-text">
+        <motion.div
+          className="projects-header-text"
+          variants={reduceMotion ? undefined : maskClip}
+          initial={reduceMotion ? false : "hidden"}
+          animate={reduceMotion ? undefined : "visible"}
+        >
           <p className="projects-hero-badge">PORTFOLIO SHOWCASE</p>
           <h1 className="projects-hero-title">
             <span className="projects-hero-title-muted">My Featured </span>
@@ -347,25 +425,40 @@ export default function Projects() {
             A curation of engineering solutions focused on high-performance architecture, clean
             aesthetics, and kinetic user experiences.
           </p>
-        </div>
-        <Link className="projects-cta-btn projects-cta-btn--primary projects-back" to="/">
-          Back to home
-        </Link>
+        </motion.div>
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, x: 16 }}
+          animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+          transition={{ duration: 0.45, ease: EASE_MASK, delay: 0.2 }}
+        >
+          <Link className="projects-cta-btn projects-cta-btn--primary projects-back" to="/">
+            Back to home
+          </Link>
+        </motion.div>
       </header>
 
-      <div className="projects-filters" role="tablist" aria-label="Filter projects by type">
-        {CATEGORIES.map(({ id, label }) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={filter === id}
-            className={`projects-filter${filter === id ? " projects-filter--active" : ""}`}
-            onClick={() => setFilter(id)}
-          >
-            {label}
-          </button>
-        ))}
+      <div ref={filtersWrapRef} className="projects-filters-wrap">
+        <motion.div
+          className="projects-filters"
+          role="tablist"
+          aria-label="Filter projects by type"
+          variants={reduceMotion ? undefined : maskClip}
+          initial={reduceMotion ? false : "hidden"}
+          animate={reduceMotion ? undefined : filtersInView ? "visible" : "hidden"}
+        >
+          {CATEGORIES.map(({ id, label }) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={filter === id}
+              className={`projects-filter${filter === id ? " projects-filter--active" : ""}`}
+              onClick={() => setFilter(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </motion.div>
       </div>
 
       <ul className="projects-grid">
@@ -373,47 +466,11 @@ export default function Projects() {
           <li key={project.id} className="projects-card-wrap">
             <article className="projects-card">
               <div className="projects-card-thumb">
-                <div
-                  className="projects-card-media"
-                  style={
-                    project.imageSrc
-                      ? undefined
-                      : { background: project.imageGradient ?? "#1a1a1c" }
-                  }
-                >
-                  {project.imageSrc ? (
-                    <img
-                      src={project.imageSrc}
-                      alt=""
-                      className="projects-card-img"
-                      width={640}
-                      height={480}
-                      decoding="async"
-                    />
-                  ) : (
-                    <span className="projects-card-media-placeholder" aria-hidden>
-                      {project.title}
-                    </span>
-                  )}
-                  <div className="projects-card-overlay">
-                    <button
-                      type="button"
-                      className="projects-card-view-more"
-                      aria-label={`View more: ${project.title}`}
-                      onClick={() => setModalProject(project)}
-                    >
-                      <img
-                        src="/images/view.png"
-                        alt=""
-                        className="projects-card-view-icon"
-                        width={20}
-                        height={20}
-                        decoding="async"
-                      />
-                      View more
-                    </button>
-                  </div>
-                </div>
+                <ProjectCardMedia
+                  project={project}
+                  reduceMotion={reduceMotion}
+                  onViewMore={() => setModalProject(project)}
+                />
               </div>
 
               <div className="projects-card-meta">
@@ -429,82 +486,106 @@ export default function Projects() {
         <p className="projects-empty">No projects in this category yet.</p>
       )}
 
-      <footer className="projects-cta">
-        <h2 className="projects-cta-heading">Want to talk shop?</h2>
-        <p className="projects-cta-lead">
-          I&apos;m always open to discussing architectural patterns, new tech stacks, or potential
-          collaborations.
-        </p>
-        <div className="projects-cta-actions">
-          <Link className="projects-cta-btn projects-cta-btn--primary" to="/contactme">
-            Get In Touch
-          </Link>
-          <a
-            className="projects-cta-btn projects-cta-btn--secondary"
-            href="/docs/Daniel_Hernandez_Gutierrez_CV_2026.pdf"
-            download
-          >
-            Download Resume
-          </a>
-        </div>
+      <footer ref={footerWrapRef} className="projects-cta">
+        <motion.div
+          className="projects-cta-reveal"
+          variants={reduceMotion ? undefined : maskClip}
+          initial={reduceMotion ? false : "hidden"}
+          animate={reduceMotion ? undefined : footerInView ? "visible" : "hidden"}
+        >
+          <h2 className="projects-cta-heading">Want to talk shop?</h2>
+          <p className="projects-cta-lead">
+            I&apos;m always open to discussing architectural patterns, new tech stacks, or potential
+            collaborations.
+          </p>
+          <div className="projects-cta-actions">
+            <Link className="projects-cta-btn projects-cta-btn--primary" to="/contactme">
+              Get In Touch
+            </Link>
+            <a
+              className="projects-cta-btn projects-cta-btn--secondary"
+              href="/docs/Daniel_Hernandez_Gutierrez_CV_2026.pdf"
+              download
+            >
+              Download Resume
+            </a>
+          </div>
+        </motion.div>
       </footer>
 
-      {modalProject &&
-        createPortal(
-          <div
-            className="projects-modal-backdrop"
-            role="presentation"
-            onClick={() => setModalProject(null)}
-          >
-            <div
-              className="projects-modal"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="projects-modal-title"
-              onClick={(e) => e.stopPropagation()}
+      {createPortal(
+        <AnimatePresence>
+          {modalProject ? (
+            <motion.div
+              key={modalProject.id}
+              className="projects-modal-backdrop"
+              role="presentation"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.34, ease: EASE_MASK }}
+              onClick={() => setModalProject(null)}
             >
-              <button
-                type="button"
-                className="projects-modal-close"
-                onClick={() => setModalProject(null)}
-                aria-label="Close"
+              <motion.div
+                className="projects-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="projects-modal-title"
+                initial={reduceMotion ? false : { opacity: 0, y: 110, scale: 0.72 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: 48, scale: 0.88 }}
+                transition={{
+                  delay: reduceMotion ? 0 : 0.08,
+                  opacity: { duration: reduceMotion ? 0 : 0.4, ease: EASE_MASK },
+                  y: { type: "spring", stiffness: 260, damping: 19, mass: 1 },
+                  scale: { type: "spring", stiffness: 260, damping: 19, mass: 1 },
+                }}
+                onClick={(e) => e.stopPropagation()}
               >
-                ×
-              </button>
-              <p className="projects-modal-eyebrow">{modalProject.subtitle}</p>
-              <h2 id="projects-modal-title" className="projects-modal-title">
-                {modalProject.title}
-              </h2>
-              <ProjectModalDescription project={modalProject} />
-              <h3 className="projects-modal-section-label">Technologies</h3>
-              <ul className="projects-modal-tags">
-                {modalProject.tags.map((tag) => (
-                  <li key={tag} className="projects-modal-tag">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-              <a
-                className="projects-modal-github"
-                href={modalProject.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {!modalProject.repoLinkLabel ? (
-                  <img
-                    className="projects-modal-github-icon"
-                    src="/images/github_black_logo.png"
-                    alt=""
-                    decoding="async"
-                    aria-hidden
-                  />
-                ) : null}
-                {modalProject.repoLinkLabel ?? "View repository on GitHub"}
-              </a>
-            </div>
-          </div>,
-          document.body
-        )}
+                <button
+                  type="button"
+                  className="projects-modal-close"
+                  onClick={() => setModalProject(null)}
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+                <p className="projects-modal-eyebrow">{modalProject.subtitle}</p>
+                <h2 id="projects-modal-title" className="projects-modal-title">
+                  {modalProject.title}
+                </h2>
+                <ProjectModalDescription project={modalProject} />
+                <h3 className="projects-modal-section-label">Technologies</h3>
+                <ul className="projects-modal-tags">
+                  {modalProject.tags.map((tag) => (
+                    <li key={tag} className="projects-modal-tag">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  className="projects-modal-github"
+                  href={modalProject.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {!modalProject.repoLinkLabel ? (
+                    <img
+                      className="projects-modal-github-icon"
+                      src="/images/github_black_logo.png"
+                      alt=""
+                      decoding="async"
+                      aria-hidden
+                    />
+                  ) : null}
+                  {modalProject.repoLinkLabel ?? "View repository on GitHub"}
+                </a>
+              </motion.div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }
