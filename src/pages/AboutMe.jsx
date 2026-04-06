@@ -6,6 +6,54 @@ import "./AboutMe.css";
 /** Edit this line to your own motto — shown in the quote box under “Who I am”. */
 const PERSONAL_MOTTO = "Going on when you feel like you can't anymore is what makes you different from everyone else. - Rocky Balboa";
 
+/**
+ * Certificates: place images in public/images/certifications/
+ * issuer: organization or platform that issued it
+ * year: when you earned it (string or number, shown as-is)
+ */
+const CERTIFICATIONS = [
+  {
+    id: "cert-1",
+    title: "ONE Tech Fundation G8 - Data Science",
+    issuer: "Alura LATAM + Oracle",
+    year: "2025",
+    imageSrc: "/images/certifications/alura_certification.webp",
+    href: "https://app.aluracursos.com/program/certificate/16613b1a-852f-4175-bd52-10ebe7840ec7?lang",
+  },
+  {
+    id: "cert-2",
+    title: "Python TOTAL - Programador Avanzado en 16 días",
+    issuer: "Udemy",
+    year: "2023",
+    imageSrc: "/images/certifications/pyhton_certification.webp",
+    href: "https://www.udemy.com/certificate/UC-100b0ee9-a25e-409a-a69f-497007ddf63d/",
+  },
+  {
+    id: "cert-3",
+    title: "SQL TOTAL - Domina Bases de Datos de 0 a Avanzado en 12 Días",
+    issuer: "Udemy",
+    year: "2024",
+    imageSrc: "/images/certifications/sql_certification.webp",
+    href: "https://udemy-certificate.s3.amazonaws.com/pdf/UC-0536ffbe-0dcd-4a5f-8342-4bd818e0d2ea.pdf",
+  },
+  {
+    id: "cert-4",
+    title: "TEC Embassador Porgram",
+    issuer: "Instituto Tecnológico y de Estudios Superiores de Monterrey",
+    year: "2024",
+    imageSrc: "/images/certifications/embassador_certification.webp",
+    href: "https://www.example.com/verify/2",
+  },
+  {
+    id: "cert-5",
+    title: "1st place at Tec de Monterrey’s Expo Ingenierías (physical prototype category)",
+    issuer: "Instituto Tecnológico y de Estudios Superiores de Monterrey",
+    year: "2025",
+    imageSrc: "/images/certificate.png",
+    href: "https://www.example.com/verify/2",
+  },
+];
+
 const TECH_STACK = [
   { name: "React", file: "react_logo.webp" },
   { name: "Python", file: "python_logo.webp" },
@@ -246,8 +294,8 @@ const AboutMe = () => {
     <div className="about-page">
       <header className="about-header">
         <h1 className="about-hero-title">
-          <span className="about-hero-title-muted">About </span>
-          <span className="about-hero-title-accent">Me</span>
+          <span className="about-hero-title-muted">THIS IS </span>
+          <span className="about-hero-title-accent">ME</span>
         </h1>
       </header>
 
@@ -306,6 +354,63 @@ const AboutMe = () => {
           </h2>
           <TechCarousel />
         </section>
+      </div>
+
+      <div className="about-mid-bleed">
+        <div className="about-mid-inner">
+          <section className="about-certs" aria-labelledby="about-certs-heading">
+            <h2 id="about-certs-heading" className="about-certs-heading">
+              <span className="about-certs-badge">Credentials</span>
+              <span className="about-certs-title-line">
+                <span className="about-tech-heading-accent about-certs-title-accent">Certifications</span>
+                <span className="about-tech-heading-muted"> &amp; courses</span>
+              </span>
+            </h2>
+            <ul className="about-cert-grid">
+              {CERTIFICATIONS.map((cert) => (
+                <li key={cert.id}>
+                  <article className="about-cert-card">
+                    <div className="about-cert-media">
+                      {cert.imageSrc ? (
+                        <img
+                          src={cert.imageSrc}
+                          alt={cert.title}
+                          className="about-cert-img"
+                          width={640}
+                          height={480}
+                          decoding="async"
+                        />
+                      ) : (
+                        <div className="about-cert-media-placeholder" aria-hidden="true">
+                          {(cert.title.trim().match(/[A-Za-z0-9]/)?.[0] ?? "?").toUpperCase()}
+                        </div>
+                      )}
+                    </div>
+                    <div className="about-cert-text">
+                      <h3 className="about-cert-title">{cert.title}</h3>
+                      {cert.issuer ? (
+                        <p className="about-cert-issuer">{cert.issuer}</p>
+                      ) : null}
+                      {cert.year != null && cert.year !== "" ? (
+                        <p className="about-cert-year">{cert.year}</p>
+                      ) : null}
+                    </div>
+                    {cert.href ? (
+                      <a
+                        href={cert.href}
+                        className="about-cert-btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        See certificate
+                      </a>
+                    ) : null}
+                  </article>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
 
       <footer className="about-cta">
