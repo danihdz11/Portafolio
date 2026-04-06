@@ -1,7 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
 import "./Projects.css";
 
 const EASE_MASK = [0.22, 1, 0.36, 1];
@@ -377,11 +383,24 @@ function ProjectModalDescription({ project }) {
 export default function Projects() {
   const [filter, setFilter] = useState("all");
   const [modalProject, setModalProject] = useState(null);
+  /** Evita dos nodos con el mismo layoutId mientras el modal hace exit (vuelta a la tarjeta). */
+  const [modalExitId, setModalExitId] = useState(null);
   const reduceMotion = useReducedMotion();
   const filtersWrapRef = useRef(null);
   const footerWrapRef = useRef(null);
   const filtersInView = useInView(filtersWrapRef, { once: true, amount: 0.12 });
   const footerInView = useInView(footerWrapRef, { once: true, amount: 0.2 });
+
+  const modalProjectRef = useRef(modalProject);
+  useEffect(() => {
+    modalProjectRef.current = modalProject;
+  }, [modalProject]);
+
+  const closeModal = useCallback(() => {
+    const p = modalProjectRef.current;
+    if (p?.id != null) setModalExitId(p.id);
+    setModalProject(null);
+  }, []);
 
   useEffect(() => {
     document.body.classList.add("projects-page-body");
@@ -389,9 +408,13 @@ export default function Projects() {
   }, []);
 
   useEffect(() => {
+    if (modalProject) setModalExitId(null);
+  }, [modalProject]);
+
+  useEffect(() => {
     if (!modalProject) return undefined;
     const onKeyDown = (e) => {
-      if (e.key === "Escape") setModalProject(null);
+      if (e.key === "Escape") closeModal();
     };
     window.addEventListener("keydown", onKeyDown);
     const prevOverflow = document.body.style.overflow;
@@ -400,7 +423,7 @@ export default function Projects() {
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [modalProject]);
+  }, [modalProject, closeModal]);
 
   const visible = useMemo(() => {
     if (filter === "all") return PROJECTS;
@@ -408,7 +431,8 @@ export default function Projects() {
   }, [filter]);
 
   return (
-    <div className="projects-page">
+    <LayoutGroup id="projects-shared-layout">
+      <div className="projects-page">
       <header className="projects-header">
         <motion.div
           className="projects-header-text"
@@ -465,13 +489,23 @@ export default function Projects() {
         {visible.map((project) => (
           <li key={project.id} className="projects-card-wrap">
             <article className="projects-card">
-              <div className="projects-card-thumb">
+              <motion.div
+                className="projects-card-thumb"
+                layoutId={
+                  reduceMotion
+                    ? undefined
+                    : modalProject?.id === project.id || modalExitId === project.id
+                      ? undefined
+                      : `project-card-${project.id}`
+                }
+                style={{ borderRadius: 20 }}
+              >
                 <ProjectCardMedia
                   project={project}
                   reduceMotion={reduceMotion}
                   onViewMore={() => setModalProject(project)}
                 />
-              </div>
+              </motion.div>
 
               <div className="projects-card-meta">
                 <h2 className="projects-card-title">{project.title}</h2>
@@ -512,9 +546,10 @@ export default function Projects() {
           </div>
         </motion.div>
       </footer>
+      </div>
 
       {createPortal(
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={() => setModalExitId(null)}>
           {modalProject ? (
             <motion.div
               key={modalProject.id}
@@ -524,28 +559,42 @@ export default function Projects() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: reduceMotion ? 0.01 : 0.34, ease: EASE_MASK }}
-              onClick={() => setModalProject(null)}
+              onClick={closeModal}
             >
               <motion.div
                 className="projects-modal"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="projects-modal-title"
-                initial={reduceMotion ? false : { opacity: 0, y: 110, scale: 0.72 }}
-                animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: 48, scale: 0.88 }}
-                transition={{
-                  delay: reduceMotion ? 0 : 0.08,
-                  opacity: { duration: reduceMotion ? 0 : 0.4, ease: EASE_MASK },
-                  y: { type: "spring", stiffness: 260, damping: 19, mass: 1 },
-                  scale: { type: "spring", stiffness: 260, damping: 19, mass: 1 },
-                }}
+                {...(reduceMotion
+                  ? {
+                      initial: { opacity: 0, y: 40, scale: 0.94 },
+                      animate: { opacity: 1, y: 0, scale: 1 },
+                      exit: { opacity: 0, y: 24, scale: 0.96 },
+                      transition: { duration: 0.32, ease: EASE_MASK },
+                    }
+                  : {
+                      layoutId: `project-card-${modalProject.id}`,
+                      style: { borderRadius: 20 },
+                      initial: { opacity: 0 },
+                      animate: { opacity: 1 },
+                      exit: { opacity: 0 },
+                      transition: {
+                        layout: {
+                          type: "spring",
+                          stiffness: 320,
+                          damping: 32,
+                          mass: 0.88,
+                        },
+                        opacity: { duration: 0.22, ease: EASE_MASK },
+                      },
+                    })}
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
                   type="button"
                   className="projects-modal-close"
-                  onClick={() => setModalProject(null)}
+                  onClick={closeModal}
                   aria-label="Close"
                 >
                   ×
@@ -586,6 +635,6 @@ export default function Projects() {
         </AnimatePresence>,
         document.body
       )}
-    </div>
+    </LayoutGroup>
   );
 }
