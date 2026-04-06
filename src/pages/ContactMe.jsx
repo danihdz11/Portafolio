@@ -41,7 +41,7 @@ export default function ContactMe() {
                     <div className="contact-profile-card">
                         <div className="contact-avatar-wrap">
                             <img
-                                src="/images/me.jpeg"
+                                src="/images/me.webp"
                                 alt=""
                                 className="contact-avatar"
                                 width={120}
@@ -54,7 +54,7 @@ export default function ContactMe() {
                         <ul className="contact-info-list">
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/mail.png" alt="" width={20} height={20} decoding="async" />
+                                    <img src="/images/mail.webp" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Email</span>
@@ -63,7 +63,7 @@ export default function ContactMe() {
                             </li>
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/telephone.png" alt="" width={20} height={20} decoding="async" />
+                                    <img src="/images/telephone.webp" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Phone</span>
@@ -72,7 +72,7 @@ export default function ContactMe() {
                             </li>
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/calendar.png" alt="" width={20} height={20} decoding="async" />
+                                    <img src="/images/calendar.webp" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Birthday</span>
@@ -81,7 +81,7 @@ export default function ContactMe() {
                             </li>
                             <li className="contact-info-item">
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/location.png" alt="" width={20} height={20} decoding="async" />
+                                    <img src="/images/location.webp" alt="" width={20} height={20} decoding="async" />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Location</span>
@@ -96,7 +96,7 @@ export default function ContactMe() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img src="/images/github_logo.png" alt="" width={22} height={22} decoding="async" />
+                                <img src="/images/github_logo.webp" alt="" width={22} height={22} decoding="async" />
                                 <span className="visually-hidden">GitHub</span>
                             </a>
                             <a
@@ -105,7 +105,7 @@ export default function ContactMe() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img src="/images/linkedin_logo.png" alt="" width={22} height={22} decoding="async" />
+                                <img src="/images/linkedin_logo.webp" alt="" width={22} height={22} decoding="async" />
                                 <span className="visually-hidden">LinkedIn</span>
                             </a>
                         </div>

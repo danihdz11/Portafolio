@@ -7,12 +7,12 @@ const LINKEDIN_HREF = "https://www.linkedin.com/in/daniel-hernandez-gutierrez/"
 const socialIcons = [
   {
     href: GITHUB_HREF,
-    src: "/images/github_logo.png",
+    src: "/images/github_logo.webp",
     label: "GitHub",
   },
   {
     href: LINKEDIN_HREF,
-    src: "/images/linkedin_logo.png",
+    src: "/images/linkedin_logo.webp",
     label: "LinkedIn",
   },
 ]
@@ -29,7 +29,7 @@ const Footer = () => {
       <div className="footer-inner">
         <div className="footer-brand-wrap">
           <img
-            src="/images/dev_logo.png"
+            src="/images/dev_logo.webp"
             alt=""
             className="footer-brand-logo"
             width={32}

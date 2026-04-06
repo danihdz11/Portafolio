@@ -62,7 +62,7 @@ function ProjectCardMedia({ project, reduceMotion, onViewMore }) {
             onClick={onViewMore}
           >
             <img
-              src="/images/view.png"
+              src="/images/view.webp"
               alt=""
               className="projects-card-view-icon"
               width={20}
@@ -96,7 +96,7 @@ const PROJECTS = [
     tags: ["Python", "OpenCV", "face_recognition", "dlib", "NumPy"],
     categories: ["vision"],
     repoUrl: "https://github.com/danihdz11/Face-Recognition",
-    imageSrc: "/images/facial_recognition.jpg",
+    imageSrc: "/images/facial_recognition.webp",
     imageGradient: "linear-gradient(145deg, #312e81 0%, #1e1b4b 50%, #0f172a 100%)",
   },
   {
@@ -108,7 +108,7 @@ const PROJECTS = [
     tags: ["Raspberry Pi", "IoT", "OpenCV", "React", "Node.js", "APIs"],
     categories: ["iot", "webdev"],
     repoUrl: "https://github.com/danihdz11/Smart-Mirror",
-    imageSrc: "/images/smart_mirror.png",
+    imageSrc: "/images/smart_mirror.webp",
     imageGradient: "linear-gradient(145deg, #134e4a 0%, #0f766e 45%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -129,7 +129,7 @@ const PROJECTS = [
       ],
       highlight:
         "1st place at Tec de Monterrey’s Expo Ingenierías (physical prototype category), recognizing the project’s impact, creativity, and execution.",
-      certificateSrc: "/images/certificate.png",
+      certificateSrc: "/images/certificate.webp",
       certificateAlt: "Expo Ingenierías first place certificate, physical prototype category",
     },
   },
@@ -142,7 +142,7 @@ const PROJECTS = [
     tags: ["C++", "OOP", "Inheritance", "Polymorphism", "CLI"],
     categories: ["desktop"],
     repoUrl: "https://github.com/danihdz11/Hotel-Management-System",
-    imageSrc: "/images/hotel_system.png",
+    imageSrc: "/images/hotel_system.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -172,7 +172,7 @@ const PROJECTS = [
     tags: ["Python", "SpeechRecognition", "pyttsx3", "pywhatkit", "yfinance"],
     categories: ["desktop"],
     repoUrl: "https://github.com/danihdz11/Virtual-Assitant",
-    imageSrc: "/images/virtual_assistant.png",
+    imageSrc: "/images/virtual_assistant.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -202,7 +202,7 @@ const PROJECTS = [
     tags: ["Python", "PySide6", "Qt6", "ReportLab", "Pillow"],
     categories: ["desktop"],
     repoUrl: "https://github.com/danihdz11/Hospital-App",
-    imageSrc: "/images/hospital.png",
+    imageSrc: "/images/hospital.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -232,7 +232,7 @@ const PROJECTS = [
     tags: ["Python", "tkinter", "GUI"],
     categories: ["desktop"],
     repoUrl: "https://github.com/danihdz11/Restaurant-Payment-System",
-    imageSrc: "/images/restaurant_system.png",
+    imageSrc: "/images/restaurant_system.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -261,7 +261,7 @@ const PROJECTS = [
     categories: ["ecommerce", "webdev"],
     repoUrl: "https://ranchdepot.com/",
     repoLinkLabel: "See page",
-    imageSrc: "/images/ranchdepot_web.png",
+    imageSrc: "/images/ranchdepot_web.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -278,7 +278,7 @@ const PROJECTS = [
         "Blends standard e-commerce with intelligent, channel-native sales support",
       ],
       paragraphsAfterList: [],
-      bottomImageSrc: "/images/ranchdepot_web_2.png",
+      bottomImageSrc: "/images/ranchdepot_web_2.webp",
       bottomImageAlt: "ranch example web",
     },
   },
@@ -291,7 +291,7 @@ const PROJECTS = [
     tags: ["Game", "Memory", "UI"],
     categories: ["desktop"],
     repoUrl: "https://github.com/danihdz11/Matching-Game",
-    imageSrc: "/images/matching_game.jpg",
+    imageSrc: "/images/matching_game.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -306,7 +306,7 @@ const PROJECTS = [
         "Victory feedback once all pairs are matched",
       ],
       paragraphsAfterList: [],
-      bottomImageSrc: "/images/playing_mg.png",
+      bottomImageSrc: "/images/playing_mg.webp",
       bottomImageAlt: "Virtual Matching Game gameplay",
     },
   },
@@ -319,7 +319,7 @@ const PROJECTS = [
     tags: ["Python", "Pandas", "NumPy", "Seaborn", "Matplotlib", "Google Colab"],
     categories: ["data"],
     repoUrl: "https://github.com/danihdz11/Alura-TelecomX",
-    imageSrc: "/images/telecom.png",
+    imageSrc: "/images/telecom.webp",
     imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
     richModal: {
       paragraphsBeforeList: [
@@ -621,7 +621,7 @@ export default function Projects() {
                   {!modalProject.repoLinkLabel ? (
                     <img
                       className="projects-modal-github-icon"
-                      src="/images/github_black_logo.png"
+                      src="/images/github_black_logo.webp"
                       alt=""
                       decoding="async"
                       aria-hidden

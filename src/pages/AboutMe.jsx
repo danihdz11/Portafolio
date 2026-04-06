@@ -49,7 +49,7 @@ const CERTIFICATIONS = [
     title: "1st place at Tec de Monterrey’s Expo Ingenierías (physical prototype category)",
     issuer: "Instituto Tecnológico y de Estudios Superiores de Monterrey",
     year: "2025",
-    imageSrc: "/images/certificate.png",
+    imageSrc: "/images/certificate.webp",
     href: "https://github.com/danihdz11/Portafolio/blob/main/public/docs/Certificate_Expo_TEC.pdf",
   },
 ];
@@ -357,7 +357,7 @@ const AboutMe = () => {
         <motion.div className="about-intro-media" variants={reduceMotion ? undefined : aboutFadeUp}>
           <div className="about-photo-wrap">
             <img
-              src="/images/me.jpeg"
+              src="/images/me.webp"
               alt="Daniel Hernández"
               className="about-photo"
               width={400}
