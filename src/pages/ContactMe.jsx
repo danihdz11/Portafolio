@@ -1,27 +1,74 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import "./ContactMe.css";
 
-const GOOGLE_MAPS_EMBED_SRC = "https://www.google.com/maps?q=Guadalajara%2C%20Jalisco%2C%20M%C3%A9xico&output=embed";
+const GOOGLE_MAPS_EMBED_SRC =
+    "https://www.google.com/maps?q=Guadalajara%2C%20Jalisco%2C%20M%C3%A9xico&output=embed";
+
+const EASE_OUT = [0.22, 1, 0.36, 1];
+
+const contactFadeUp = {
+    hidden: { opacity: 0, y: 22 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.68, ease: EASE_OUT },
+    },
+};
+
+const contactLayoutStagger = {
+    hidden: {},
+    visible: {
+        transition: { staggerChildren: 0.22, delayChildren: 0.18 },
+    },
+};
+
+const contactColumn = {
+    hidden: { opacity: 0, y: 26 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.72, ease: EASE_OUT },
+    },
+};
+
+const contactListStagger = {
+    hidden: {},
+    visible: {
+        transition: { staggerChildren: 0.14, delayChildren: 0.32 },
+    },
+};
+
+const contactInfoItem = {
+    hidden: { opacity: 0, y: 12 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.52, ease: EASE_OUT },
+    },
+};
 
 export default function ContactMe() {
+    const reduceMotion = useReducedMotion();
+
     const [form, setForm] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-    })
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+    });
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({
             ...prev,
             [name]: value,
-        }))
-    }
+        }));
+    };
 
     const handleSendEmail = async (e) => {
         e.preventDefault();
-        const data = await fetch('api/server', {
+        const data = await fetch("api/server", {
             method: "POST",
             headers: {},
             body: JSON.stringify({
@@ -32,71 +79,159 @@ export default function ContactMe() {
         });
         const res = await data.json();
         console.log(res);
-    }
+    };
+
+    const inViewProps = reduceMotion
+        ? {}
+        : {
+              initial: "hidden",
+              whileInView: "visible",
+              viewport: { once: true, amount: 0.22 },
+          };
+
+    const listMotionProps = reduceMotion
+        ? {}
+        : {
+              initial: "hidden",
+              animate: "visible",
+              variants: contactListStagger,
+          };
 
     return (
         <div className="contact-page">
-            <div className="contact-layout">
-                <aside className="contact-sidebar" aria-label="Información de contacto">
+            <motion.div
+                className="contact-layout"
+                variants={reduceMotion ? undefined : contactLayoutStagger}
+                initial={reduceMotion ? false : "hidden"}
+                animate={reduceMotion ? undefined : "visible"}
+            >
+                <motion.aside
+                    className="contact-sidebar"
+                    aria-label="Información de contacto"
+                    variants={reduceMotion ? undefined : contactColumn}
+                >
                     <div className="contact-profile-card">
-                        <div className="contact-avatar-wrap">
-                            <img
-                                src="/images/me.webp"
-                                alt=""
-                                className="contact-avatar"
-                                width={120}
-                                height={120}
-                                decoding="async"
-                            />
-                        </div>
-                        <h2 className="contact-name">Daniel Hernández</h2>
-                        <p className="contact-role">Developer</p>
-                        <ul className="contact-info-list">
-                            <li className="contact-info-item">
+                        <motion.div
+                            className="contact-profile-top"
+                            variants={reduceMotion ? undefined : contactFadeUp}
+                            initial={reduceMotion ? false : "hidden"}
+                            animate={reduceMotion ? undefined : "visible"}
+                        >
+                            <div className="contact-avatar-wrap">
+                                <img
+                                    src="/images/me.webp"
+                                    alt=""
+                                    className="contact-avatar"
+                                    width={120}
+                                    height={120}
+                                    decoding="async"
+                                />
+                            </div>
+                            <h2 className="contact-name">Daniel Hernández</h2>
+                            <p className="contact-role">Developer</p>
+                        </motion.div>
+                        <motion.ul
+                            className="contact-info-list"
+                            {...listMotionProps}
+                        >
+                            <motion.li
+                                className="contact-info-item"
+                                variants={reduceMotion ? undefined : contactInfoItem}
+                            >
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/mail.webp" alt="" width={20} height={20} decoding="async" />
+                                    <img
+                                        src="/images/mail.webp"
+                                        alt=""
+                                        width={20}
+                                        height={20}
+                                        decoding="async"
+                                    />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Email</span>
-                                    <span className="contact-info-value">dani.hdz.dev@gmail.com</span>
+                                    <span className="contact-info-value">
+                                        dani.hdz.dev@gmail.com
+                                    </span>
                                 </div>
-                            </li>
-                            <li className="contact-info-item">
+                            </motion.li>
+                            <motion.li
+                                className="contact-info-item"
+                                variants={reduceMotion ? undefined : contactInfoItem}
+                            >
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/telephone.webp" alt="" width={20} height={20} decoding="async" />
+                                    <img
+                                        src="/images/telephone.webp"
+                                        alt=""
+                                        width={20}
+                                        height={20}
+                                        decoding="async"
+                                    />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Phone</span>
-                                    <span className="contact-info-value">+52 3312714517</span>
+                                    <span className="contact-info-value">
+                                        +52 3312714517
+                                    </span>
                                 </div>
-                            </li>
-                            <li className="contact-info-item">
+                            </motion.li>
+                            <motion.li
+                                className="contact-info-item"
+                                variants={reduceMotion ? undefined : contactInfoItem}
+                            >
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/calendar.webp" alt="" width={20} height={20} decoding="async" />
+                                    <img
+                                        src="/images/calendar.webp"
+                                        alt=""
+                                        width={20}
+                                        height={20}
+                                        decoding="async"
+                                    />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Birthday</span>
                                     <span className="contact-info-value">13-09-2005</span>
                                 </div>
-                            </li>
-                            <li className="contact-info-item">
+                            </motion.li>
+                            <motion.li
+                                className="contact-info-item"
+                                variants={reduceMotion ? undefined : contactInfoItem}
+                            >
                                 <span className="contact-info-icon" aria-hidden>
-                                    <img src="/images/location.webp" alt="" width={20} height={20} decoding="async" />
+                                    <img
+                                        src="/images/location.webp"
+                                        alt=""
+                                        width={20}
+                                        height={20}
+                                        decoding="async"
+                                    />
                                 </span>
                                 <div className="contact-info-text">
                                     <span className="contact-info-label">Location</span>
-                                    <span className="contact-info-value">Guadalajara, México</span>
+                                    <span className="contact-info-value">
+                                        Guadalajara, México
+                                    </span>
                                 </div>
-                            </li>
-                        </ul>
-                        <div className="contact-sidebar-social">
+                            </motion.li>
+                        </motion.ul>
+                        <motion.div
+                            className="contact-sidebar-social"
+                            variants={reduceMotion ? undefined : contactFadeUp}
+                            initial={reduceMotion ? false : "hidden"}
+                            animate={reduceMotion ? undefined : "visible"}
+                        >
                             <a
                                 href="https://github.com/danihdz11"
                                 className="contact-sidebar-social-link"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img src="/images/github_logo.webp" alt="" width={22} height={22} decoding="async" />
+                                <img
+                                    src="/images/github_logo.webp"
+                                    alt=""
+                                    width={22}
+                                    height={22}
+                                    decoding="async"
+                                />
                                 <span className="visually-hidden">GitHub</span>
                             </a>
                             <a
@@ -105,19 +240,29 @@ export default function ContactMe() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img src="/images/linkedin_logo.webp" alt="" width={22} height={22} decoding="async" />
+                                <img
+                                    src="/images/linkedin_logo.webp"
+                                    alt=""
+                                    width={22}
+                                    height={22}
+                                    decoding="async"
+                                />
                                 <span className="visually-hidden">LinkedIn</span>
                             </a>
-                        </div>
+                        </motion.div>
                     </div>
-                </aside>
+                </motion.aside>
 
-                <main className="contact-main">
+                <motion.main className="contact-main" variants={reduceMotion ? undefined : contactColumn}>
                     <header className="contact-main-header">
                         <h1 className="contact-page-title">Contact</h1>
                     </header>
 
-                    <div className="contact-map-wrap">
+                    <motion.div
+                        className="contact-map-wrap"
+                        variants={reduceMotion ? undefined : contactFadeUp}
+                        {...inViewProps}
+                    >
                         <iframe
                             title="Ubicación"
                             className="contact-map-iframe"
@@ -126,10 +271,17 @@ export default function ContactMe() {
                             allowFullScreen
                             referrerPolicy="no-referrer-when-downgrade"
                         />
-                    </div>
+                    </motion.div>
 
-                    <section className="contact-form-section" aria-labelledby="contact-form-heading">
-                        <h2 id="contact-form-heading" className="contact-form-title">Contact Form</h2>
+                    <motion.section
+                        className="contact-form-section"
+                        aria-labelledby="contact-form-heading"
+                        variants={reduceMotion ? undefined : contactFadeUp}
+                        {...inViewProps}
+                    >
+                        <h2 id="contact-form-heading" className="contact-form-title">
+                            Contact Form
+                        </h2>
                         <div className="contact-form-grid">
                             <div className="contact-form-row">
                                 <label className="contact-field">
@@ -170,10 +322,13 @@ export default function ContactMe() {
                             </label>
                         </div>
                         <div className="contact-form-footer">
-                            <button
+                            <motion.button
                                 type="button"
                                 onClick={handleSendEmail}
                                 className="contact-submit"
+                                whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+                                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                                transition={{ type: "spring", stiffness: 420, damping: 28 }}
                             >
                                 <svg
                                     className="contact-submit-icon"
@@ -191,11 +346,11 @@ export default function ContactMe() {
                                     <path d="M22 2 15 22 11 13 2 9 22 2z" />
                                 </svg>
                                 Send Message
-                            </button>
+                            </motion.button>
                         </div>
-                    </section>
-                </main>
-            </div>
+                    </motion.section>
+                </motion.main>
+            </motion.div>
         </div>
-    )
+    );
 }

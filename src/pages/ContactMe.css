@@ -18,6 +18,13 @@
   width: min(100%, 300px);
 }
 
+.contact-profile-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .contact-profile-card {
   background-color: #0f172a;
   border: 1px solid rgba(255, 255, 255, 0.06);
