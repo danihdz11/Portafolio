@@ -5,12 +5,6 @@ import "./MainProjects.css";
 
 const FEATURED = PROJECTS.slice(0, 5);
 
-function tagAbbrev(tag) {
-  const t = (tag || "").trim();
-  if (t.length <= 2) return t.toUpperCase();
-  return t.slice(0, 2).toUpperCase();
-}
-
 export default function MainProjects() {
   const [active, setActive] = useState(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -34,7 +28,6 @@ export default function MainProjects() {
 
         <ul className="main-projects-list">
           {FEATURED.map((project) => {
-            const stack = (project.tags ?? []).slice(0, 3);
             return (
               <li key={project.id} className="main-projects-item">
                 <div
@@ -43,13 +36,12 @@ export default function MainProjects() {
                   onMouseMove={onRowMove}
                   onMouseLeave={() => setActive(null)}
                 >
-                  <div className="main-projects-stack" aria-hidden>
-                    {stack.map((tag) => (
-                      <span key={tag} className="main-projects-stack-mark" title={tag}>
-                        {tagAbbrev(tag)}
-                      </span>
-                    ))}
-                  </div>
+                  <img
+                    src="/images/text_mark_icon.webp"
+                    alt=""
+                    className="main-projects-mark-icon"
+                    decoding="async"
+                  />
 
                   <div className="main-projects-copy">
                     <span className="main-projects-name">{project.title}</span>

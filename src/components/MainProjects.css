@@ -79,9 +79,9 @@
     color: var(--mp-hover-muted);
   }
 
-  .main-projects-row:hover .main-projects-stack-mark {
-    border-color: rgba(10, 10, 10, 0.22);
-    color: var(--mp-hover-fg);
+  .main-projects-row:hover .main-projects-mark-icon {
+    filter: brightness(0);
+    opacity: 0.85;
   }
 
   .main-projects-row:hover .main-projects-cta {
@@ -90,24 +90,15 @@
   }
 }
 
-.main-projects-stack {
-  display: flex;
-  gap: 0.35rem;
+.main-projects-mark-icon {
+  display: block;
   flex-shrink: 0;
-}
-
-.main-projects-stack-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.65rem;
-  height: 1.65rem;
-  border: 1px solid var(--mp-line);
-  border-radius: 999px;
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: border-color 0.22s ease, color 0.22s ease;
+  height: 1.35rem;
+  width: auto;
+  max-width: 4.5rem;
+  object-fit: contain;
+  opacity: 0.92;
+  transition: filter 0.22s ease, opacity 0.22s ease;
 }
 
 .main-projects-copy {
@@ -168,19 +159,19 @@
   padding: 0.85rem 2rem;
   border: none;
   border-radius: 4px;
-  background-color: #00ff9d;
-  color: #0a0a0a;
+  background-color: #2563eb;
+  color: #f8fafc;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .main-projects-all:hover {
-  filter: brightness(1.05);
+  background-color: #3b82f6;
 }
 
 .main-projects-all:active {
@@ -282,7 +273,7 @@
 @media (prefers-reduced-motion: reduce) {
   .main-projects-row,
   .main-projects-sub,
-  .main-projects-stack-mark,
+  .main-projects-mark-icon,
   .main-projects-cta,
   .main-projects-all {
     transition: none;
