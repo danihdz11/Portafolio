@@ -87,7 +87,7 @@ const CATEGORIES = [
 const PROJECTS = [
   {
     id: "facial-recognition",
-    title: "Face Recognition Attendance System",
+    title: "Face Recognition Attendance",
     subtitle: "Computer vision · Python",
     description: "This project uses facial recognition to register employee attendance through a webcam. It compares each captured face against a database of employee images and records the entry time when a match is found. Employee photos are loaded from an Employees folder, converted to RGB, and encoded for recognition. When the script runs, it opens the webcam, matches live frames to registered encodings, displays the employee name on success, and appends employee name and entry time to register.csv (created automatically if it does not exist, with rows in the form employee_name, entry_time). If no registered face matches, the system reports that no employee was matched. Dependencies include dlib (with CMake for builds), face_recognition, OpenCV (cv2), and NumPy, alongside Python’s os and datetime for file paths and timestamps.",
     tags: ["Python", "OpenCV", "face_recognition", "dlib", "NumPy"],
@@ -251,7 +251,7 @@ const PROJECTS = [
   {
     id: "ranch-depot",
     title: "Ranch Depot",
-    subtitle: "Shopify · E-commerce · Conversational commerce",
+    subtitle: "Shopify · E-commerce · Campaigns",
     description:
       "A western-style Shopify store (boots, hats, jeans, horse gear) with a conversion-focused layout plus a SendPulse chatbot wired to the product catalog via a custom API—natural-language shopping on channels like WhatsApp with images, details, and buy links.",
     tags: ["Shopify", "SendPulse", "WhatsApp", "API", "E-commerce"],
@@ -549,8 +549,38 @@ export default function Projects() {
               </motion.div>
 
               <div className="projects-card-meta">
-                <h2 className="projects-card-title">{project.title}</h2>
-                <p className="projects-card-subtitle">{project.subtitle}</p>
+                <div className="projects-card-meta-text">
+                  <h2 className="projects-card-title">{project.title}</h2>
+                  <p className="projects-card-subtitle">{project.subtitle}</p>
+                </div>
+                <a
+                  className="projects-card-code"
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={
+                    project.id === "ranch-depot"
+                      ? `Go — ${project.title} (opens in new tab)`
+                      : `Code — ${project.title} (opens in new tab)`
+                  }
+                >
+                  {project.id === "ranch-depot" ? (
+                    "See page"
+                  ) : (
+                    <>
+                      <img
+                        className="projects-card-code-icon"
+                        src="/images/github_logo.webp"
+                        alt=""
+                        width={18}
+                        height={18}
+                        decoding="async"
+                        aria-hidden
+                      />
+                      Code
+                    </>
+                  )}
+                </a>
               </div>
             </article>
           </li>
