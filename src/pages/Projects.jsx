@@ -336,6 +336,34 @@ const PROJECTS = [
       paragraphsAfterList: [],
     },
   },
+  {
+    id: "calculator",
+    title: "Calculator",
+    subtitle: "HTML · CSS · JavaScript",
+    description:
+      "A browser-based calculator with addition (+), subtraction (-), multiplication (x), division (/), and power (^). It accepts decimals with validation (one decimal point per number), logs every evaluation on a History page with expression, result, and time, and includes a Clear History control to reset the log.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    categories: ["school"],
+    repoUrl: "https://github.com/danihdz11/Calculator",
+    imageSrc: "/images/calculator_1.webp",
+    imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
+    richModal: {
+      paragraphsBeforeList: [
+        "This project is a client-side calculator built with HTML, CSS, and JavaScript. Users can chain operations, work with decimal values under simple input rules, and review past work on a dedicated History screen.",
+        "Each completed calculation is stored with the full expression, the numeric result, and a timestamp so the session stays auditable without redoing the math.",
+      ],
+      listIntro: "Highlights:",
+      listItems: [
+        "Operations: addition (+), subtraction (-), multiplication (x), division (/), and power (^)",
+        "Decimal numbers supported; input validation ensures at most one decimal point per number",
+        "History page lists expression, result, and time for every calculation",
+        "Clear History button removes all saved entries",
+      ],
+      paragraphsAfterList: [],
+      bottomImageSrc: "/images/calculator_2.webp",
+      bottomImageAlt: "ranch example web",
+    },
+  },
 ];
 
 function ProjectModalDescription({ project }) {
@@ -379,6 +407,7 @@ function ProjectModalDescription({ project }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState("all");
+  const [schoolView, setSchoolView] = useState(false);
   const [modalProject, setModalProject] = useState(null);
 
   const [modalExitId, setModalExitId] = useState(null);
@@ -423,9 +452,12 @@ export default function Projects() {
   }, [modalProject, closeModal]);
 
   const visible = useMemo(() => {
+    if (schoolView) {
+      return PROJECTS.filter((p) => p.categories.includes("school"));
+    }
     if (filter === "all") return PROJECTS;
     return PROJECTS.filter((p) => p.categories.includes(filter));
-  }, [filter]);
+  }, [filter, schoolView]);
 
   return (
     <LayoutGroup id="projects-shared-layout">
@@ -448,13 +480,22 @@ export default function Projects() {
           </p>
         </motion.div>
         <motion.div
+          className="projects-header-ctas"
           initial={reduceMotion ? false : { opacity: 0, x: 16 }}
           animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
           transition={{ duration: 0.45, ease: EASE_MASK, delay: 0.2 }}
         >
-          <Link className="projects-cta-btn projects-cta-btn--primary projects-back" to="/">
+          <Link className="projects-cta-btn projects-cta-btn--primary" to="/">
             Back to home
           </Link>
+          <button
+            type="button"
+            className="projects-cta-btn projects-cta-btn--secondary"
+            aria-pressed={schoolView}
+            onClick={() => setSchoolView(true)}
+          >
+            School
+          </button>
         </motion.div>
       </header>
 
@@ -472,9 +513,12 @@ export default function Projects() {
               key={id}
               type="button"
               role="tab"
-              aria-selected={filter === id}
-              className={`projects-filter${filter === id ? " projects-filter--active" : ""}`}
-              onClick={() => setFilter(id)}
+              aria-selected={!schoolView && filter === id}
+              className={`projects-filter${!schoolView && filter === id ? " projects-filter--active" : ""}`}
+              onClick={() => {
+                setSchoolView(false);
+                setFilter(id);
+              }}
             >
               {label}
             </button>
