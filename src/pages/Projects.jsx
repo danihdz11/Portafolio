@@ -364,6 +364,35 @@ const PROJECTS = [
       bottomImageAlt: "ranch example web",
     },
   },
+  {
+    id: "console-retro-game",
+    title: "Console Retro Game",
+    subtitle: "React · Vite · Tailwind CSS · PokéAPI",
+    description:
+      "A retro-style console UI that lists 100 Pokémon from the PokéAPI on a 4-column grid. Use the D-pad to move, confirm to face a random opponent in a VS battle view, and Home to return—built with React, Vite, and Tailwind CSS.",
+    tags: ["React", "Vite", "Tailwind CSS", "PokéAPI"],
+    categories: ["school"],
+    repoUrl: "https://github.com/danihdz11/Console-Retro-Game",
+    imageSrc: "/images/my_console.webp",
+    imageGradient: "linear-gradient(145deg, #4c1d95 0%, #5b21b6 40%, #0f172a 100%)",
+    richModal: {
+      paragraphsBeforeList: [
+        "Console Retro Game is a retro-inspired handheld layout that loads a catalog of Pokémon from the public PokéAPI and presents them as a browsable grid inside a faux console shell.",
+        "The stack is React with Vite for tooling and Tailwind CSS for layout and styling, with emphasis on the grid, Joy-Con-style controls, and the transition into a simple battle presentation.",
+      ],
+      listIntro: "Features:",
+      listItems: [
+        "Grid navigation (left Joy-Con D-pad): 100 Pokémon in a 4-column grid — Up/Down move one row (±4), Left/Right move one slot (±1); the focused Pokémon is highlighted",
+        "Moving outside valid bounds snaps selection back to the starting position (first Pokémon)",
+        "Confirm (right Joy-Con): locks your Pokémon, the computer chooses a random rival from the same 100, and the UI shows a VS battle screen between the two",
+        "Home (H, right Joy-Con): returns to the grid, moves focus to the first Pokémon, and clears the current battle selection",
+        "X, Y, and B appear for authenticity but have no behavior in this version",
+      ],
+      paragraphsAfterList: [],
+      bottomImageSrc: "/images/vs_console.webp",
+      bottomImageAlt: "Console VS battle view",
+    },
+  },
 ];
 
 function ProjectModalDescription({ project }) {
