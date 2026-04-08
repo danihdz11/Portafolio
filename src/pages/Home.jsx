@@ -1,15 +1,13 @@
-import { Link } from "react-router";
-
+import Hero from "../components/Hero";
+import MainProjects from "../components/MainProjects";
 
 const Home = () => {
-    return (
-        <>
-            <h1>Home</h1>
-            <p>
-                <Link to="/">Go Back</Link>
-            </p>
-        </>
-    )
-}
+  return (
+    <>
+      <Hero />
+      <MainProjects />
+    </>
+  );
+};
 
 export default Home;

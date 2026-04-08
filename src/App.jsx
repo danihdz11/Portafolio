@@ -1,7 +1,7 @@
 import './App.css'
 import { Routes, Route, Outlet } from 'react-router-dom'
 import NavBar from './components/Navbar'
-import Hero from './components/Hero'
+import Home from './pages/Home'
 import Footer from './components/Footer'
 import AboutMe from './pages/AboutMe'
 import Skills from './pages/Skills'
@@ -22,7 +22,7 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Hero />} />
+        <Route path="/" element={<Home />} />
         <Route path="/aboutme" element={<AboutMe />} />
         <Route path="/skills" element={<Skills />} />
         <Route path="/projects" element={<Projects />} />

@@ -434,6 +434,8 @@ function ProjectModalDescription({ project }) {
   return <p className="projects-modal-description">{project.description}</p>;
 }
 
+export { PROJECTS };
+
 export default function Projects() {
   const [filter, setFilter] = useState("all");
   const [schoolView, setSchoolView] = useState(false);
