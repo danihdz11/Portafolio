@@ -8,7 +8,8 @@
   --mp-hover-muted: rgba(10, 10, 10, 0.55);
   background: var(--mp-bg);
   color: var(--mp-fg);
-  padding: clamp(3rem, 8vw, 5.5rem) clamp(1.25rem, 5vw, 4rem) clamp(4rem, 10vw, 6rem);
+  padding: clamp(3rem, 7vw, 5rem) clamp(1.25rem, 5vw, 4rem)
+    clamp(4rem, 10vw, 6rem);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   position: relative;
 }
@@ -16,6 +17,7 @@
 .main-projects-inner {
   max-width: 1120px;
   margin: 0 auto;
+  padding-top: clamp(0.35rem, 1vw, 0.65rem);
 }
 
 .main-projects-title {
