@@ -1,22 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Hero.css";
 
-const CalendarIcon = () => (
-  <svg
-    className="hero__cta-icon"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <rect x="3" y="4" width="18" height="18" rx="2" />
-    <path d="M16 2v4M8 2v4M3 10h18" />
-  </svg>
-);
-
 const Hero = () => {
   return (
     <section className="hero" aria-labelledby="hero-heading">
@@ -34,31 +18,34 @@ const Hero = () => {
           />
         </div>
 
+        <div className="hero__availability-wrap">
+          <p className="hero__availability" role="status">
+            <img
+              className="hero__availability-mark"
+              src="/images/green_mark.webp"
+              alt=""
+              width={22}
+              height={22}
+              decoding="async"
+            />
+            <span className="hero__availability-label">Available to work</span>
+          </p>
+        </div>
+
         <nav className="hero__nav" aria-label="Section shortcuts">
           <Link to="/projects" className="hero__nav-link">
             Works
           </Link>
-          <Link to="/skills" className="hero__nav-link">
-            Services
-          </Link>
-          <Link to="/contactme" className="hero__nav-link">
-            Contact
-          </Link>
+          <a
+            className="hero__nav-link"
+            href="/docs/Daniel_Hernandez_Gutierrez_CV_2026.pdf"
+            download="Daniel_Hernandez_Gutierrez_CV_2026.pdf"
+          >
+            Resume
+          </a>
         </nav>
 
         <div className="hero__left">
-          <div className="hero__social-proof">
-            <div className="hero__avatars" aria-hidden>
-              <span className="hero__avatar hero__avatar--a" />
-              <span className="hero__avatar hero__avatar--b" />
-              <span className="hero__avatar hero__avatar--c" />
-            </div>
-            <div className="hero__proof-text">
-              <span className="hero__proof-count">25+</span>
-              <span className="hero__proof-label">Collaborations &amp; reviews</span>
-            </div>
-          </div>
-
           <h1 id="hero-heading" className="hero__title">
             <span className="hero__title-line hero__title-line--plain">It&apos;s me</span>
             <span className="hero__title-line hero__title-line--accent">Daniel</span>
@@ -96,7 +83,14 @@ const Hero = () => {
 
         <div className="hero__visual">
           <Link to="/contactme" className="hero__cta-pill">
-            <CalendarIcon />
+            <img
+              className="hero__cta-icon"
+              src="/images/white_calendar.webp"
+              alt=""
+              width={22}
+              height={22}
+              decoding="async"
+            />
             Schedule a call
           </Link>
         </div>
