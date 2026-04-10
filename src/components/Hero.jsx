@@ -52,8 +52,7 @@ const Hero = () => {
           </h1>
 
           <p className="hero__lead">
-            Full-stack developer focused on clear UX and reliable code—shipping web
-            products end to end, from APIs to polished interfaces.
+          Hi there! I’m a Computer Science student with a strong interest in Artificial Intelligence and data analysis. I enjoy building solutions that solve real-world problems.
           </p>
 
           <dl className="hero__stats">

@@ -1,0 +1,222 @@
+.my-skills {
+  --ms-bg: #1d0c26;
+  --ms-fg: #fafafa;
+  --ms-muted: rgba(250, 250, 250, 0.72);
+  --ms-accent: #00ff9d;
+  --ms-accent-2: #cf5cff;
+  --ms-card: rgba(255, 255, 255, 0.045);
+  --ms-card-border: rgba(255, 255, 255, 0.1);
+  --ms-viewport-h: clamp(28rem, 68vmin, 44rem);
+  --ms-viewport-max-w: min(1080px, 100%);
+  background: var(--ms-bg);
+  color: var(--ms-fg);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  padding: clamp(3.25rem, 8vw, 5.5rem) clamp(1rem, 4vw, 2.5rem)
+    clamp(3.5rem, 9vw, 5.75rem);
+  position: relative;
+  overflow-x: clip;
+}
+
+.my-skills__shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.my-skills__intro {
+  text-align: center;
+  width: 100%;
+}
+
+.my-skills__stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(0.75rem, 3vw, 2.25rem);
+  width: 100%;
+}
+
+.my-skills__carousel {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my-skills__rail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-skills__rail--left {
+  flex-direction: row;
+  padding-right: clamp(0.35rem, 1.5vw, 0.85rem);
+}
+
+.my-skills__rail-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: clamp(1.9rem, 5vw, 3.15rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: linear-gradient(
+    185deg,
+    #bfdbfe 0%,
+    #60a5fa 32%,
+    #2563eb 62%,
+    #1e40af 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.my-skills__rail--right {
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-left: clamp(0.25rem, 1.5vw, 0.75rem);
+}
+
+.my-skills__marker {
+  width: 2px;
+  height: clamp(1.75rem, 4vh, 2.75rem);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.my-skills__marker[data-active="true"] {
+  background: linear-gradient(180deg, var(--ms-accent), rgba(0, 255, 157, 0.35));
+  box-shadow: 0 0 14px rgba(0, 255, 157, 0.35);
+}
+
+.my-skills__title {
+  margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
+  font-size: clamp(2rem, 4.8vw, 3.15rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  background: linear-gradient(0.25turn, var(--ms-accent), #ebf8e1, var(--ms-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.my-skills__lead {
+  margin: 0 auto clamp(1.25rem, 3vw, 1.75rem);
+  max-width: 52ch;
+  font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+  line-height: 1.65;
+  color: var(--ms-muted);
+}
+
+.my-skills__viewport {
+  width: 100%;
+  max-width: var(--ms-viewport-max-w);
+  min-height: var(--ms-viewport-h);
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0;
+  background: transparent;
+}
+
+.my-skills__page {
+  box-sizing: border-box;
+  padding: clamp(0.85rem, 2.2vw, 1.35rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--ms-viewport-h);
+}
+
+.my-skills__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(11.5rem, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+  flex: 1 1 auto;
+  min-height: 0;
+  align-content: stretch;
+}
+
+.my-skills__cell {
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+
+.my-skills__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: clamp(1rem, 2.4vw, 1.35rem) clamp(0.5rem, 1.5vw, 0.85rem);
+  background: var(--ms-card);
+  border: 1px solid var(--ms-card-border);
+  border-radius: 12px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.my-skills__card:hover {
+  border-color: rgba(0, 255, 157, 0.35);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 1px rgba(0, 255, 157, 0.12);
+}
+
+.my-skills__logo {
+  width: clamp(2.75rem, 7vw, 4rem);
+  height: auto;
+  max-height: clamp(3rem, 8vw, 4.25rem);
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.my-skills__name {
+  font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ms-fg);
+  text-align: center;
+  line-height: 1.25;
+  max-width: 100%;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 640px) {
+  .my-skills__stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .my-skills__rail--left,
+  .my-skills__rail--right {
+    display: none;
+  }
+
+  .my-skills__viewport {
+    max-width: 100%;
+  }
+}
