@@ -50,6 +50,8 @@ const contactInfoItem = {
 
 export default function ContactMe() {
     const reduceMotion = useReducedMotion();
+    const [errors, setErrors] = useState({});
+    const [statusMessage, setStatusMessage] = useState("");
 
     const [form, setForm] = useState({
         name: "",
@@ -64,21 +66,65 @@ export default function ContactMe() {
             ...prev,
             [name]: value,
         }));
+        setStatusMessage("");
+        setErrors((prev) => ({
+            ...prev,
+            [name]: "",
+        }));
+    };
+
+    const validateForm = () => {
+        const nextErrors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!form.name.trim()) nextErrors.name = "Name is required.";
+        if (!form.email.trim()) {
+            nextErrors.email = "Email is required.";
+        } else if (!emailRegex.test(form.email.trim())) {
+            nextErrors.email = "Please enter a valid email.";
+        }
+        if (!form.message.trim()) nextErrors.message = "Message is required.";
+
+        setErrors(nextErrors);
+        return Object.keys(nextErrors).length === 0;
     };
 
     const handleSendEmail = async (e) => {
         e.preventDefault();
-        const data = await fetch("api/server", {
-            method: "POST",
-            headers: {},
-            body: JSON.stringify({
-                name: form.name,
-                email: form.email,
-                message: form.message,
-            }),
-        });
-        const res = await data.json();
-        console.log(res);
+        if (!validateForm()) {
+            setStatusMessage("");
+            return;
+        }
+
+        try {
+            const data = await fetch("api/server", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: form.name.trim(),
+                    email: form.email.trim(),
+                    message: form.message.trim(),
+                }),
+            });
+            const res = await data.json();
+            if (!data.ok) {
+                setStatusMessage(res?.message || "No se pudo enviar el mensaje.");
+                return;
+            }
+
+            setStatusMessage("Mensaje enviado");
+            setForm({
+                name: "",
+                email: "",
+                subject: "",
+                message: "",
+            });
+            setErrors({});
+        } catch (error) {
+            setStatusMessage("No se pudo enviar el mensaje.");
+        }
     };
 
     const inViewProps = reduceMotion
@@ -294,7 +340,10 @@ export default function ContactMe() {
                                         value={form.name}
                                         onChange={handleOnChange}
                                         autoComplete="name"
+                                        required
+                                        aria-invalid={Boolean(errors.name)}
                                     />
+                                    {errors.name ? <small>{errors.name}</small> : null}
                                 </label>
                                 <label className="contact-field">
                                     <span className="visually-hidden">Email address</span>
@@ -306,7 +355,10 @@ export default function ContactMe() {
                                         value={form.email}
                                         onChange={handleOnChange}
                                         autoComplete="email"
+                                        required
+                                        aria-invalid={Boolean(errors.email)}
                                     />
+                                    {errors.email ? <small>{errors.email}</small> : null}
                                 </label>
                             </div>
                             <label className="contact-field contact-field--full">
@@ -318,10 +370,14 @@ export default function ContactMe() {
                                     placeholder="Your Message"
                                     value={form.message}
                                     onChange={handleOnChange}
+                                    required
+                                    aria-invalid={Boolean(errors.message)}
                                 />
+                                {errors.message ? <small>{errors.message}</small> : null}
                             </label>
                         </div>
                         <div className="contact-form-footer">
+                            {statusMessage ? <small>{statusMessage}</small> : null}
                             <motion.button
                                 type="button"
                                 onClick={handleSendEmail}
